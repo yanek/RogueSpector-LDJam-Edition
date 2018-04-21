@@ -13,14 +13,17 @@ namespace Game.Scripts.Unit
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             Vector2 destination = new Vector2(Mathf.Round(rb.position.x), Mathf.Round(rb.position.y)) + direction;
 
-            if (gameObject.CompareTag(SRTags.Player))
+            if (gameObject.CompareTag(SRTags.Player) && GameManager.Instance.CurrentState == GameManager.State.Standard)
             {
                 rb.DOMove(destination, 0.1f).OnComplete(() => { TurnManager.Instance.CurrentPhase.Value = TurnManager.Phase.Shot; });
                 TurnManager.Instance.TurnCount.Value++;
             }
             else
             {
-                if (GridManager.Instance.IsFree(destination)) { TurnManager.Instance.EnemyMoves.Add(rb, destination); }
+                if (GridManager.Instance.IsFree(destination) && !TurnManager.Instance.EnemyMoves.ContainsKey(rb))
+                {
+                    TurnManager.Instance.EnemyMoves.Add(rb, destination);
+                }
             }
         }
 

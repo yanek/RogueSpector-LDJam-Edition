@@ -21,13 +21,34 @@ public sealed class SRSortingLayers {
     
     private const string _tsInternal = "1.3.2-Unity5";
     
-    public static global::TypeSafe.SortingLayer Default {
+    public static global::TypeSafe.SortingLayer Background {
         get {
             return __all[0];
         }
     }
     
+    public static global::TypeSafe.SortingLayer Bullets {
+        get {
+            return __all[1];
+        }
+    }
+    
+    public static global::TypeSafe.SortingLayer Units {
+        get {
+            return __all[2];
+        }
+    }
+    
+    public static global::TypeSafe.SortingLayer Default {
+        get {
+            return __all[3];
+        }
+    }
+    
     private static global::System.Collections.Generic.IList<global::TypeSafe.SortingLayer> __all = new global::System.Collections.ObjectModel.ReadOnlyCollection<global::TypeSafe.SortingLayer>(new global::TypeSafe.SortingLayer[] {
+                new global::TypeSafe.SortingLayer("Background", 4446773),
+                new global::TypeSafe.SortingLayer("Bullets", 824697895),
+                new global::TypeSafe.SortingLayer("Units", 1393196931),
                 new global::TypeSafe.SortingLayer("Default", 0)});
     
     public static global::System.Collections.Generic.IList<global::TypeSafe.SortingLayer> All {

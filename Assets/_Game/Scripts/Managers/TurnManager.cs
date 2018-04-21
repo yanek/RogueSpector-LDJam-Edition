@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Game.Scripts.Dynamic;
 using UniRx;
+using Unity.Linq;
 using UnityEngine;
 
 namespace Game.Scripts.Managers
@@ -30,22 +31,6 @@ namespace Game.Scripts.Managers
             EnemyMoves = new Dictionary<Rigidbody2D, Vector2>();
             Shots = new List<GameObject>();
             Disposables = new List<GameObject>();
-            Instance.TurnCount.Subscribe(x => { ScoreManager.Instance.Score.Value += 50; });
-            Instance.CurrentPhase.Where(x => x == Phase.AiMove).Subscribe(x => MainThreadDispatcher.StartCoroutine(PlayEnemyMoves()));
-            Instance.CurrentPhase.Where(x => x == Phase.Shot).Subscribe(x => MainThreadDispatcher.StartCoroutine(PlayShots()));
-            Instance.CurrentPhase.Where(x => x == Phase.Resolution).Subscribe(x => MainThreadDispatcher.StartCoroutine(Resolve()));
-        }
-
-        private IEnumerator Resolve()
-        {
-            GameObject box = new GameObject();
-            foreach (GameObject disposable in Disposables) { disposable.transform.SetParent(box.transform); }
-
-            yield return null;
-
-            Destroy(box);
-            Disposables.Clear();
-            CurrentPhase.Value = Phase.AiMove;
         }
 
         private IEnumerator PlayEnemyMoves()
@@ -68,18 +53,50 @@ namespace Game.Scripts.Managers
 
             foreach (GameObject shooter in Shots)
             {
-                GameObject bullet = SRResources.Prefabs.Dynamic.Bullet01.Instantiate();
-                Bullet component = bullet.GetComponent<Bullet>();
-                bullet.transform.position = shooter.transform.position;
-
-                component.Direction = !shooter.CompareTag(SRTags.Player) ? Vector3.down : Vector3.up;
-                component.Emitter = shooter;
+                StartCoroutine(shooter.CompareTag(SRTags.Player)
+                                   ? Bullet.SpawnBullets(3, SRResources.Prefabs.Dynamic.Bullet02, shooter)
+                                   : Bullet.SpawnBullets(5, SRResources.Prefabs.Dynamic.Bullet01, shooter));
             }
 
-            yield return new WaitForSeconds(Bullet.BulletFlyTime);
+            yield return new WaitForSeconds(Bullet.BulletFlyTime / 2);
 
             Shots.Clear();
             CurrentPhase.Value = Phase.Resolution;
+        }
+
+        private IEnumerator Resolve()
+        {
+            GameObject box = new GameObject();
+            foreach (GameObject disposable in Disposables)
+            {
+                if (disposable.CompareTag(SRTags.Enemy) || disposable.CompareTag(SRTags.Friend))
+                {
+                    GameObject explo = SRResources.Prefabs.Dynamic.Explo01.Instantiate(disposable.transform.position);
+                    explo.transform.DOPunchScale(Vector3.one * 3, 1f, 2, 0f).OnComplete(() => explo.Destroy());
+                }
+
+                disposable.transform.SetParent(box.transform);
+            }
+
+            yield return null;
+
+            Destroy(box);
+            Disposables.Clear();
+            CurrentPhase.Value = Phase.AiMove;
+        }
+
+        private void Start()
+        {
+            Instance.TurnCount.Subscribe(x => { ScoreManager.Instance.Score.Value += 50; });
+            Instance.CurrentPhase.Where(x => GameManager.Instance.CurrentState == GameManager.State.Standard)
+                    .Where(x => x == Phase.AiMove)
+                    .Subscribe(x => StartCoroutine(PlayEnemyMoves()));
+            Instance.CurrentPhase.Where(x => GameManager.Instance.CurrentState == GameManager.State.Standard)
+                    .Where(x => x == Phase.Shot)
+                    .Subscribe(x => StartCoroutine(PlayShots()));
+            Instance.CurrentPhase.Where(x => GameManager.Instance.CurrentState == GameManager.State.Standard)
+                    .Where(x => x == Phase.Resolution)
+                    .Subscribe(x => StartCoroutine(Resolve()));
         }
     }
 }

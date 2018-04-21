@@ -15,14 +15,24 @@ namespace Game.Scripts.UI
 
         private void Update()
         {
+            _text.text = "Turn #" + TurnManager.Instance.TurnCount.Value + "\n";
             TurnManager.Phase phase = TurnManager.Instance.CurrentPhase.Value;
             switch (phase)
             {
                 case TurnManager.Phase.PlayerMove:
-                    _text.text = "Move!";
+                    _text.text += "Move!";
+                    break;
+                case TurnManager.Phase.AiMove:
+                    _text.text += "AI Movements...";
+                    break;
+                case TurnManager.Phase.Resolution:
+                    _text.text += "Turn resolution...";
+                    break;
+                case TurnManager.Phase.Shot:
+                    _text.text += "Pew! Pew!";
                     break;
                 default:
-                    _text.text = "Stand by...";
+                    _text.text += "Stand by...";
                     break;
             }
         }

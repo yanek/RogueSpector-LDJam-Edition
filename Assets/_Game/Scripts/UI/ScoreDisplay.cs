@@ -22,7 +22,7 @@ namespace Game.Scripts.UI
 
         private void Start()
         {
-            ScoreManager.Instance.Score.Subscribe(x => { _text.text = x.ToString(); });
+            ScoreManager.Instance.Score.Subscribe(x => { _text.text = x.ToString(); }).AddTo(this);
         }
     }
 }

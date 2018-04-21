@@ -1,4 +1,5 @@
 ﻿using Game.Scripts.Unit;
+using JetBrains.Annotations;
 using UniRx;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +8,9 @@ namespace Game.Scripts.UI
 {
     public class HealthDisplay : MonoBehaviour
     {
+        [CanBeNull]
         private Health _playerHealth;
+
         private Text _text;
 
         private void Awake()
@@ -17,8 +20,14 @@ namespace Game.Scripts.UI
 
         private void Start()
         {
-            _playerHealth = GameObject.FindGameObjectWithTag(SRTags.Player).GetComponent<Health>();
-            _playerHealth.CurrentHealth.Subscribe(x => _text.text = x.ToString());
+            GameObject player = GameObject.FindGameObjectWithTag(SRTags.Player);
+
+            if (player == null) { gameObject.SetActive(false); }
+            else
+            {
+                _playerHealth = player.GetComponent<Health>();
+                _playerHealth.CurrentHealth.Subscribe(x => _text.text = x.ToString());
+            }
         }
     }
 }

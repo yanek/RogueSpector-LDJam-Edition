@@ -4,6 +4,7 @@ using DG.Tweening;
 using Game.Scripts.Dynamic;
 using Game.Scripts.Managers;
 using UniRx;
+using Unity.Linq;
 using UnityEngine;
 
 namespace Game.Scripts.Unit
@@ -24,7 +25,13 @@ namespace Game.Scripts.Unit
                                                     .Where(x => x.Emitter == obj);
             foreach (Bullet bullet in bullets) { TurnManager.Instance.Disposables.Add(bullet.gameObject); }
 
-            if (obj.CompareTag(SRTags.Player)) { }
+            if (obj.CompareTag(SRTags.Player))
+            {
+                SRResources.Prefabs.UI.GameOverScreen.Instantiate(FindObjectOfType<Canvas>().transform);
+                GameObject explo = SRResources.Prefabs.Dynamic.Explo01.Instantiate(transform.position);
+                explo.transform.DOPunchScale(Vector3.one * 40, 3f, 2, 5f).OnComplete(() => explo.Destroy());
+                obj.Destroy();
+            }
             else { TurnManager.Instance.Disposables.Add(obj); }
         }
 

@@ -4,6 +4,7 @@
 //
 // Made for Unity 2017.1.1f1
 
+using System.Collections;
 using DG.Tweening;
 using Game.Scripts.Managers;
 using Game.Scripts.Unit;
@@ -33,6 +34,18 @@ namespace Game.Scripts.Dynamic
         public Vector2 Direction { get; set; }
 
         public GameObject Emitter { get; set; }
+
+        public static IEnumerator SpawnBullets(int number, GameObject prefab, GameObject shooter)
+        {
+            for (int i = 0; i < number; i++)
+            {
+                Bullet bullet = Instantiate(prefab).GetComponent<Bullet>();
+                bullet.transform.position = shooter.transform.position;
+                bullet.Direction = !shooter.CompareTag(SRTags.Player) ? Vector3.down : Vector3.up;
+                bullet.Emitter = shooter;
+                yield return new WaitForSeconds(0.08f);
+            }
+        }
 
         private void Awake()
         {
