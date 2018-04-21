@@ -21,10 +21,6 @@ public sealed class SRInput {
     
     private const string _tsInternal = "1.3.2-Unity5";
     
-    public static readonly global::TypeSafe.InputAxis Horizontal = new global::TypeSafe.InputAxis("Horizontal");
-    
-    public static readonly global::TypeSafe.InputAxis Vertical = new global::TypeSafe.InputAxis("Vertical");
-    
     public static readonly global::TypeSafe.InputAxis Fire1 = new global::TypeSafe.InputAxis("Fire1");
     
     public static readonly global::TypeSafe.InputAxis Fire2 = new global::TypeSafe.InputAxis("Fire2");
@@ -37,9 +33,15 @@ public sealed class SRInput {
     
     public static readonly global::TypeSafe.InputAxis Mouse_Y = new global::TypeSafe.InputAxis("Mouse Y");
     
-    public static readonly global::TypeSafe.InputAxis Mouse_ScrollWheel = new global::TypeSafe.InputAxis("Mouse ScrollWheel");
-    
     public static readonly global::TypeSafe.InputAxis Submit = new global::TypeSafe.InputAxis("Submit");
     
     public static readonly global::TypeSafe.InputAxis Cancel = new global::TypeSafe.InputAxis("Cancel");
+    
+    public static readonly global::TypeSafe.InputAxis Up = new global::TypeSafe.InputAxis("Up");
+    
+    public static readonly global::TypeSafe.InputAxis Down = new global::TypeSafe.InputAxis("Down");
+    
+    public static readonly global::TypeSafe.InputAxis Left = new global::TypeSafe.InputAxis("Left");
+    
+    public static readonly global::TypeSafe.InputAxis Right = new global::TypeSafe.InputAxis("Right");
 }
