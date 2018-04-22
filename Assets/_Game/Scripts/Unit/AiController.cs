@@ -16,6 +16,8 @@ namespace Game.Scripts.Unit
         [SerializeField]
         private bool _canStrafe;
 
+        private BulletCharge _charge;
+
         private int _lastMoveTurn;
 
         [SerializeField]
@@ -29,22 +31,29 @@ namespace Game.Scripts.Unit
         [SerializeField]
         private int _moveRate = 1;
 
+        private GameObject _player;
+
         private void Awake()
         {
             _mover = GetComponent<Mover>();
+            _charge = GetComponentInChildren<BulletCharge>(true);
+            _player = GameObject.FindGameObjectWithTag(SRTags.Player);
         }
 
         private void Move()
         {
             Vector2 movement = Vector2.down;
-            if (_canStrafe)
+
+            bool distanceCheck = _player == null || Vector2.Distance(_player.transform.position, transform.position) > 2;
+            bool chargeCheck = _charge == null || !_charge.gameObject.activeSelf;
+
+            if (_canStrafe && distanceCheck && chargeCheck)
             {
                 int roll = Random.Range(1, 100);
                 if (roll < 50)
-                {
-                    if (roll <= 25 || transform.position.x >= _maxCol) { movement += Vector2.left; }
-                    else if (roll > 25 || transform.position.x <= _minCol) { movement += Vector2.right; }
-                }
+                    if (roll <= 25 || transform.position.x >= _maxCol)
+                        movement += Vector2.left;
+                    else if (roll > 25 || transform.position.x <= _minCol) movement += Vector2.right;
             }
 
             _lastMoveTurn = TurnManager.Instance.TurnCount.Value;

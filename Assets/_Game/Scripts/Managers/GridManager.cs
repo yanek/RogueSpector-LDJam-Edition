@@ -10,7 +10,7 @@ using UnityEngine;
 namespace Game.Scripts.Managers
 {
     public class GridManager : Singleton<GridManager>
-    {
+    {/*
         private Dictionary<GameObject, Vector2> _cells;
 
         public void ChangeReservedCell(GameObject obj, Vector2 destination)
@@ -34,6 +34,6 @@ namespace Game.Scripts.Managers
         private void Awake()
         {
             _cells = new Dictionary<GameObject, Vector2>();
-        }
+        }*/
     }
 }

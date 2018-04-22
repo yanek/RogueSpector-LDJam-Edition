@@ -20,19 +20,16 @@ namespace Game.Scripts.Unit
             }
             else
             {
-                if (GridManager.Instance.IsFree(destination) && !TurnManager.Instance.EnemyMoves.ContainsKey(rb))
-                {
-                    TurnManager.Instance.EnemyMoves.Add(rb, destination);
-                }
+                if (!TurnManager.Instance.EnemyMoves.ContainsKey(rb)) TurnManager.Instance.EnemyMoves.Add(rb, destination);
             }
         }
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag(SRTags.Bullet) || !gameObject.CompareTag(SRTags.Player)) { return; }
+            if (other.gameObject.CompareTag(SRTags.Bullet) || !gameObject.CompareTag(SRTags.Player)) return;
 
             Health health = GetComponent<Health>();
-            if (health != null) { health.TakeDamage(500); }
+            if (health != null) health.TakeDamage(500);
         }
     }
 }

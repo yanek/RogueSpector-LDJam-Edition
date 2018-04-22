@@ -9,10 +9,15 @@ using UnityEngine;
 
 namespace Game.Scripts.Unit
 {
+    [RequireComponent(typeof(SpriteRenderer))]
     public class Health : MonoBehaviour
     {
+        private AudioSource _audioSource;
+
         [SerializeField]
         private int _maxHealth = 100;
+
+        private SpriteRenderer _sprite;
 
         public IntReactiveProperty CurrentHealth { get; set; }
 
@@ -23,16 +28,20 @@ namespace Game.Scripts.Unit
             IEnumerable<Bullet> bullets = GameObject.FindGameObjectsWithTag(SRTags.Bullet)
                                                     .Select(x => x.GetComponent<Bullet>())
                                                     .Where(x => x.Emitter == obj);
-            foreach (Bullet bullet in bullets) { TurnManager.Instance.Disposables.Add(bullet.gameObject); }
+            foreach (Bullet bullet in bullets) TurnManager.Instance.Disposables.Add(bullet.gameObject);
 
             if (obj.CompareTag(SRTags.Player))
             {
                 SRResources.Prefabs.UI.GameOverScreen.Instantiate(FindObjectOfType<Canvas>().transform);
+                _audioSource.PlayOneShot(SRResources.SFX.S_Explo01);
                 GameObject explo = SRResources.Prefabs.Dynamic.Explo01.Instantiate(transform.position);
                 explo.transform.DOPunchScale(Vector3.one * 40, 3f, 2, 5f).OnComplete(() => explo.Destroy());
                 obj.Destroy();
             }
-            else { TurnManager.Instance.Disposables.Add(obj); }
+            else
+            {
+                TurnManager.Instance.Disposables.Add(obj);
+            }
         }
 
         public int Heal(uint amount)
@@ -44,8 +53,11 @@ namespace Game.Scripts.Unit
         public int TakeDamage(uint amount)
         {
             CurrentHealth.Value -= (int)amount;
-            Vector3 pos = transform.position;
-            transform.DOShakePosition(0.2f, 0.25f, 20).OnComplete(() => { transform.position = pos; });
+            DOTween.Sequence()
+                   .Append(_sprite.DOColor(Color.red, 0))
+                   .Append(_sprite.DOFade(0.5f, 0.1f))
+                   .AppendInterval(0.1f)
+                   .Append(_sprite.DOColor(Color.white, 0));
             return CurrentHealth.Value;
         }
 
@@ -53,15 +65,19 @@ namespace Game.Scripts.Unit
         {
             CurrentHealth = new IntReactiveProperty { Value = _maxHealth };
             OnDeath = new Subject<GameObject>();
+            _audioSource = Camera.main.GetComponent<AudioSource>();
+            _sprite = GetComponent<SpriteRenderer>();
         }
 
         private void Start()
         {
             CurrentHealth.Subscribe(x =>
                          {
-                             if (x > _maxHealth) { CurrentHealth.Value = _maxHealth; }
+                             if (gameObject.CompareTag(SRTags.Player)) _audioSource.PlayOneShot(SRResources.SFX.S_Hit01);
 
-                             if (CurrentHealth.Value <= 0) { OnDeath.OnNext(gameObject); }
+                             if (x > _maxHealth) CurrentHealth.Value = _maxHealth;
+
+                             if (CurrentHealth.Value <= 0) OnDeath.OnNext(gameObject);
                          })
                          .AddTo(this);
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using DG.Tweening;
 using Game.Scripts.Dynamic;
+using Game.Scripts.Unit;
 using UniRx;
 using Unity.Linq;
 using UnityEngine;
@@ -67,10 +68,14 @@ namespace Game.Scripts.Managers
         private IEnumerator Resolve()
         {
             GameObject box = new GameObject();
+            AudioSource audioSource = Camera.main.GetComponent<AudioSource>();
             foreach (GameObject disposable in Disposables)
             {
-                if (disposable.CompareTag(SRTags.Enemy) || disposable.CompareTag(SRTags.Friend))
+                Health health = disposable.GetComponent<Health>();
+                if ((disposable.CompareTag(SRTags.Enemy) || disposable.CompareTag(SRTags.Friend)) && health != null &&
+                    health.CurrentHealth.Value <= 0)
                 {
+                    audioSource.PlayOneShot(SRResources.SFX.S_Explo02);
                     GameObject explo = SRResources.Prefabs.Dynamic.Explo01.Instantiate(disposable.transform.position);
                     explo.transform.DOPunchScale(Vector3.one * 3, 1f, 2, 0f).OnComplete(() => explo.Destroy());
                 }
@@ -78,16 +83,16 @@ namespace Game.Scripts.Managers
                 disposable.transform.SetParent(box.transform);
             }
 
-            yield return null;
-
             Destroy(box);
             Disposables.Clear();
             CurrentPhase.Value = Phase.AiMove;
+
+            yield return null;
         }
 
         private void Start()
         {
-            Instance.TurnCount.Subscribe(x => { ScoreManager.Instance.Score.Value += 50; });
+            Instance.TurnCount.Where(x => x > 1).Subscribe(x => { ScoreManager.Instance.Score.Value += 50; });
             Instance.CurrentPhase.Where(x => GameManager.Instance.CurrentState == GameManager.State.Standard)
                     .Where(x => x == Phase.AiMove)
                     .Subscribe(x => StartCoroutine(PlayEnemyMoves()));

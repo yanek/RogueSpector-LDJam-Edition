@@ -6,10 +6,22 @@ namespace Game.Scripts.Unit
 {
     public class Shooter : MonoBehaviour
     {
+        private BulletCharge _bulletCharge;
+
         [SerializeField]
         private int _frequency;
 
         private int _lastShotTurn;
+
+        private void Awake()
+        {
+            _bulletCharge = GetComponentInChildren<BulletCharge>(true);
+        }
+
+        private void ChargeFx(int turn)
+        {
+            if (turn >= _lastShotTurn + _frequency - 1 && !_bulletCharge.isActiveAndEnabled) _bulletCharge.gameObject.SetActive(true);
+        }
 
         private void Shoot(int turn)
         {
@@ -26,6 +38,7 @@ namespace Game.Scripts.Unit
             _lastShotTurn = Random.Range(turn, _frequency + turn);
 
             TurnManager.Instance.TurnCount.Subscribe(Shoot).AddTo(this);
+            TurnManager.Instance.TurnCount.Where(x => _bulletCharge != null).Subscribe(ChargeFx).AddTo(this);
         }
     }
 }

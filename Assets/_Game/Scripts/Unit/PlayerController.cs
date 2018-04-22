@@ -27,18 +27,18 @@ namespace Game.Scripts.Unit
 
         private void HandleInputs()
         {
-            if (Input.GetButtonDown(SRInput.Up) && transform.position.y < _maxRow) { _mover.Move(Vector2.up); }
+            if (Input.GetButtonDown(SRInput.Up) && transform.position.y < _maxRow) _mover.Move(Vector2.up);
 
-            if (Input.GetButtonDown(SRInput.Down) && transform.position.y > _minRow) { _mover.Move(Vector2.down); }
+            if (Input.GetButtonDown(SRInput.Down) && transform.position.y > _minRow) _mover.Move(Vector2.down);
 
-            if (Input.GetButtonDown(SRInput.Left) && transform.position.x > _minCol) { _mover.Move(Vector2.left); }
+            if (Input.GetButtonDown(SRInput.Left) && transform.position.x > _minCol) _mover.Move(Vector2.left);
 
-            if (Input.GetButtonDown(SRInput.Right) && transform.position.x < _maxCol) { _mover.Move(Vector2.right); }
+            if (Input.GetButtonDown(SRInput.Right) && transform.position.x < _maxCol) _mover.Move(Vector2.right);
         }
 
         private void Update()
         {
-            if (TurnManager.Instance.CurrentPhase.Value == TurnManager.Phase.PlayerMove) { HandleInputs(); }
+            if (TurnManager.Instance.CurrentPhase.Value == TurnManager.Phase.PlayerMove) HandleInputs();
         }
     }
 }

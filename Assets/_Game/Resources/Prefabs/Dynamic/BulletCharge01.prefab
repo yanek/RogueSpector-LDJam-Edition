@@ -25,8 +25,9 @@ GameObject:
   - component: {fileID: 114986090665744368}
   - component: {fileID: 114875535685757112}
   - component: {fileID: 95509947131035858}
+  - component: {fileID: 114614640382891336}
   m_Layer: 0
-  m_Name: BulletCharge
+  m_Name: BulletCharge01
   m_TagString: Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -38,8 +39,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1791636414556386}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.9888, y: 0.31, z: 0}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0.43, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -107,6 +108,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114614640382891336
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1791636414556386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02365a7cfd284f842b3516cdaed8c8f3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114875535685757112
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -166,7 +178,7 @@ SpriteRenderer:
   m_SortingLayerID: 1393196931
   m_SortingLayer: -1
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 5ee85c58f5252284bbc2ee55051322fe, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b8bbb2e15b637014cbb396d3b214cf37, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

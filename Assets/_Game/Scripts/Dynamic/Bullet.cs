@@ -8,7 +8,6 @@ using System.Collections;
 using DG.Tweening;
 using Game.Scripts.Managers;
 using Game.Scripts.Unit;
-using UniRx;
 using UnityEngine;
 
 namespace Game.Scripts.Dynamic
@@ -16,12 +15,11 @@ namespace Game.Scripts.Dynamic
     [RequireComponent(typeof(Rigidbody2D))]
     public class Bullet : MonoBehaviour
     {
-        public const float BulletFlyTime = 1f;
+        public const float BulletFlyTime = 2f;
+        private AudioSource _audioSource;
 
         [SerializeField]
         private uint _damage;
-
-        private PlayerController _player;
 
         private Rigidbody2D _rb;
 
@@ -37,6 +35,9 @@ namespace Game.Scripts.Dynamic
 
         public static IEnumerator SpawnBullets(int number, GameObject prefab, GameObject shooter)
         {
+            BulletCharge charge = shooter.GetComponentInChildren<BulletCharge>();
+            if (charge != null) charge.gameObject.SetActive(false);
+
             for (int i = 0; i < number; i++)
             {
                 Bullet bullet = Instantiate(prefab).GetComponent<Bullet>();
@@ -50,7 +51,7 @@ namespace Game.Scripts.Dynamic
         private void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _player = GameObject.FindGameObjectWithTag(SRTags.Player).GetComponent<PlayerController>();
+            _audioSource = Camera.main.GetComponent<AudioSource>();
         }
 
         private void OnCollisionEnter2D(Collision2D other)
@@ -58,14 +59,18 @@ namespace Game.Scripts.Dynamic
             if (other.gameObject != Emitter && !other.gameObject.CompareTag(SRTags.Bullet))
             {
                 //if the shooter is not the player, ensure that it cannot hit his friends.
-                if (!Emitter.CompareTag(SRTags.Player) && !other.gameObject.CompareTag(SRTags.Player)) { return; }
+                if (Emitter == null) return;
+                if (!Emitter.CompareTag(SRTags.Player) && !other.gameObject.CompareTag(SRTags.Player)) return;
 
                 //apply damage
                 Health health = other.gameObject.GetComponent<Health>();
-                if (health != null) { health.TakeDamage(_damage); }
+                if (health != null) health.TakeDamage(_damage);
+                _audioSource.PlayOneShot(SRResources.SFX.S_Hit02);
 
                 //increment score if shooted by player
-                if (Emitter.CompareTag(SRTags.Player)) { ScoreManager.Instance.Score.Value += 100; }
+                if (Emitter.CompareTag(SRTags.Player)) ScoreManager.Instance.Score.Value += 10;
+
+                StartCoroutine(PlayImpact(transform.position));
 
                 transform.localScale = Vector3.zero;
                 _rb.simulated = false;
@@ -73,9 +78,19 @@ namespace Game.Scripts.Dynamic
             }
         }
 
+        private IEnumerator PlayImpact(Vector3 position)
+        {
+            GameObject impact = SRResources.Prefabs.Dynamic.Impact.Instantiate();
+            impact.transform.position = position;
+
+            yield return null;
+            TurnManager.Instance.Disposables.Add(impact);
+        }
+
         private void Start()
         {
-            TurnManager.Instance.TurnCount.Subscribe(x => { _rb.DOMove(_rb.position + Direction * 20, BulletFlyTime); }).AddTo(this);
+            _audioSource.PlayOneShot(SRResources.SFX.S_Shoot01);
+            _rb.DOMove(_rb.position + Direction * 20, BulletFlyTime);
         }
     }
 }

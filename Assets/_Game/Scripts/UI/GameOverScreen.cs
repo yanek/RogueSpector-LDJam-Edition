@@ -8,6 +8,10 @@ public class GameOverScreen : MonoBehaviour
     {
         GameManager.Instance.CurrentState = GameManager.State.GameOver;
 
+        TurnManager.Instance.Disposables.Clear();
+        TurnManager.Instance.Shots.Clear();
+        TurnManager.Instance.EnemyMoves.Clear();
+
         GameObject.FindGameObjectsWithTag(SRTags.Bullet).Destroy();
         GameObject.FindGameObjectsWithTag(SRTags.Friend).Destroy();
         GameObject.FindGameObjectsWithTag(SRTags.Enemy).Destroy();

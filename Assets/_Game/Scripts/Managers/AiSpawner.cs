@@ -27,8 +27,7 @@ namespace Game.Scripts.Managers
             GameObject obj = Instantiate(_obstacles[Random.Range(0, _obstacles.Count)]);
 
             Vector2 pos = new Vector2(Random.Range(0, 8), _spawningRow);
-            if (GridManager.Instance.IsFree(pos)) { obj.transform.position = pos; }
-            else { Debug.Log("Abording obstacle spawning due to unavailable cell"); }
+            obj.transform.position = pos;
         }
 
         private void SpawnShip()
@@ -36,8 +35,7 @@ namespace Game.Scripts.Managers
             GameObject obj = Instantiate(_ships[Random.Range(0, _ships.Count)]);
 
             Vector2 pos = new Vector2(Random.Range(0, 8), _spawningRow);
-            if (GridManager.Instance.IsFree(pos)) { obj.transform.position = pos; }
-            else { Debug.Log("Abording ship spawning due to unavailable cell"); }
+            obj.transform.position = pos;
         }
 
         private void Start()
@@ -48,7 +46,7 @@ namespace Game.Scripts.Managers
                              GameObject.FindGameObjectsWithTag(SRTags.Friend).Length;
 
                 SpawnObstacle();
-                if (_unitCount < _maxUnits) { SpawnShip(); }
+                if (_unitCount < _maxUnits) SpawnShip();
             });
         }
     }
