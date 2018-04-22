@@ -13,7 +13,7 @@ namespace Game.Scripts.Unit
             Rigidbody2D rb = GetComponent<Rigidbody2D>();
             Vector2 destination = new Vector2(Mathf.Round(rb.position.x), Mathf.Round(rb.position.y)) + direction;
 
-            if (gameObject.CompareTag(SRTags.Player) && GameManager.Instance.CurrentState == GameManager.State.Standard)
+            if (gameObject.CompareTag("Player") && GameManager.Instance.CurrentState == GameManager.State.Standard)
             {
                 rb.DOMove(destination, 0.1f).OnComplete(() => { TurnManager.Instance.CurrentPhase.Value = TurnManager.Phase.Shot; });
                 TurnManager.Instance.TurnCount.Value++;
@@ -26,10 +26,11 @@ namespace Game.Scripts.Unit
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject.CompareTag(SRTags.Bullet) || !gameObject.CompareTag(SRTags.Player)) return;
+            if (other.gameObject.CompareTag("Bullet") || !gameObject.CompareTag("Player")) return;
+            Debug.Log(name + " collided with " + other.gameObject.name);
 
             Health health = GetComponent<Health>();
-            if (health != null) health.TakeDamage(500);
+            if (health != null) health.TakeDamage(999);
         }
     }
 }

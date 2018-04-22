@@ -42,7 +42,7 @@ namespace Game.Scripts.Dynamic
             {
                 Bullet bullet = Instantiate(prefab).GetComponent<Bullet>();
                 bullet.transform.position = shooter.transform.position;
-                bullet.Direction = !shooter.CompareTag(SRTags.Player) ? Vector3.down : Vector3.up;
+                bullet.Direction = !shooter.CompareTag("Player") ? Vector3.down : Vector3.up;
                 bullet.Emitter = shooter;
                 yield return new WaitForSeconds(0.08f);
             }
@@ -56,20 +56,19 @@ namespace Game.Scripts.Dynamic
 
         private void OnCollisionEnter2D(Collision2D other)
         {
-            if (other.gameObject != Emitter && !other.gameObject.CompareTag(SRTags.Bullet))
+            if (other.gameObject != Emitter && !other.gameObject.CompareTag("Bullet"))
             {
                 //if the shooter is not the player, ensure that it cannot hit his friends.
                 if (Emitter == null) return;
-                if (!Emitter.CompareTag(SRTags.Player) && !other.gameObject.CompareTag(SRTags.Player)) return;
+                if (!Emitter.CompareTag("Player") && !other.gameObject.CompareTag("Player")) return;
 
                 //apply damage
                 Health health = other.gameObject.GetComponent<Health>();
                 if (health != null) health.TakeDamage(_damage);
-                _audioSource.PlayOneShot(SRResources.SFX.S_Hit02);
+                _audioSource.PlayOneShot(Resources.Load<AudioClip>("SFX/S_Hit02"));
 
                 //increment score if shooted by player
-                if (Emitter.CompareTag(SRTags.Player) && other.gameObject.CompareTag(SRTags.Enemy) && other.gameObject.GetComponent<Shooter>() != null
-                )
+                if (Emitter.CompareTag("Player") && other.gameObject.CompareTag("Enemy") && other.gameObject.GetComponent<Shooter>() != null)
                     ScoreManager.Instance.Score.Value += 10;
 
                 StartCoroutine(PlayImpact(transform.position));
@@ -82,7 +81,7 @@ namespace Game.Scripts.Dynamic
 
         private IEnumerator PlayImpact(Vector3 position)
         {
-            GameObject impact = SRResources.Prefabs.Dynamic.Impact.Instantiate();
+            GameObject impact = Instantiate(ManagedPrefabs.Bank[PrefabID.Impact]);
             impact.transform.position = position;
 
             yield return null;
@@ -91,7 +90,7 @@ namespace Game.Scripts.Dynamic
 
         private void Start()
         {
-            _audioSource.PlayOneShot(SRResources.SFX.S_Shoot01);
+            _audioSource.PlayOneShot(Resources.Load<AudioClip>("SFX/S_Shoot01"));
             _rb.DOMove(_rb.position + Direction * 20, BulletFlyTime);
         }
     }

@@ -20,9 +20,12 @@ namespace Game.Scripts.UI
 
         private void Start()
         {
-            GameObject player = GameObject.FindGameObjectWithTag(SRTags.Player);
+            GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-            if (player == null) { gameObject.SetActive(false); }
+            if (player == null)
+            {
+                gameObject.SetActive(false);
+            }
             else
             {
                 _playerHealth = player.GetComponent<Health>();

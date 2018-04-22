@@ -37,7 +37,7 @@ namespace Game.Scripts.Unit
         {
             _mover = GetComponent<Mover>();
             _charge = GetComponentInChildren<BulletCharge>(true);
-            _player = GameObject.FindGameObjectWithTag(SRTags.Player);
+            _player = GameObject.FindGameObjectWithTag("Player");
         }
 
         private void Move()

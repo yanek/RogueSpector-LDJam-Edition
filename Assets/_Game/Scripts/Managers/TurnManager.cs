@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Game.Scripts.Dynamic;
 using Game.Scripts.Unit;
-using TypeSafe;
 using UniRx;
 using Unity.Linq;
 using UnityEngine;
@@ -55,10 +54,7 @@ namespace Game.Scripts.Managers
 
             foreach (GameObject shooter in Shots)
             {
-                PrefabResource prefab = shooter.CompareTag(SRTags.Player)
-                    ? SRResources.Prefabs.Dynamic.Bullet02
-                    : SRResources.Prefabs.Dynamic.Bullet01;
-
+                GameObject prefab = shooter.CompareTag("Player") ? ManagedPrefabs.Bank[PrefabID.Bullet02] : ManagedPrefabs.Bank[PrefabID.Bullet01];
                 StartCoroutine(Bullet.SpawnBullets(shooter.GetComponent<Shooter>().ShotsPerTurn, prefab, shooter));
             }
 
@@ -75,11 +71,11 @@ namespace Game.Scripts.Managers
             foreach (GameObject disposable in Disposables)
             {
                 Health health = disposable.GetComponent<Health>();
-                if ((disposable.CompareTag(SRTags.Enemy) || disposable.CompareTag(SRTags.Friend)) && health != null &&
-                    health.CurrentHealth.Value <= 0)
+                if ((disposable.CompareTag("Enemy") || disposable.CompareTag("Friend")) && health != null && health.CurrentHealth.Value <= 0)
                 {
-                    audioSource.PlayOneShot(SRResources.SFX.S_Explo02);
-                    GameObject explo = SRResources.Prefabs.Dynamic.Explo01.Instantiate(disposable.transform.position);
+                    audioSource.PlayOneShot(Resources.Load<AudioClip>("SFX/S_Explo02"));
+                    GameObject explo = Instantiate(ManagedPrefabs.Bank[PrefabID.Explo01]);
+                    explo.transform.position = disposable.transform.position;
                     explo.transform.DOPunchScale(Vector3.one * 3, 1f, 2, 0f).OnComplete(() => explo.Destroy());
                 }
 

@@ -24,17 +24,18 @@ namespace Game.Scripts.Unit
 
         public void HandleDeath(GameObject obj)
         {
-            if (obj.CompareTag(SRTags.Player))
+            if (obj.CompareTag("Player"))
             {
-                SRResources.Prefabs.UI.GameOverScreen.Instantiate(FindObjectOfType<Canvas>().transform);
-                _audioSource.PlayOneShot(SRResources.SFX.S_Explo01);
-                GameObject explo = SRResources.Prefabs.Dynamic.Explo01.Instantiate(transform.position);
+                Instantiate(ManagedPrefabs.Bank[PrefabID.UI_GameOver], FindObjectOfType<Canvas>().transform);
+                _audioSource.PlayOneShot(Resources.Load<AudioClip>("SFX/S_Explo01"));
+                GameObject explo = Instantiate(ManagedPrefabs.Bank[PrefabID.Explo01]);
+                explo.transform.position = transform.position;
                 explo.transform.DOPunchScale(Vector3.one * 40, 3f, 2, 5f).OnComplete(() => explo.Destroy());
                 obj.Destroy();
             }
-            else if (obj.CompareTag(SRTags.Friend))
+            else if (obj.CompareTag("Friend"))
             {
-                GameObject.FindGameObjectWithTag(SRTags.Player).GetComponent<Health>().TakeDamage(100);
+                GameObject.FindGameObjectWithTag("Player").GetComponent<Health>().TakeDamage(100);
                 TurnManager.Instance.Disposables.Add(obj);
             }
             else
@@ -49,15 +50,15 @@ namespace Game.Scripts.Unit
             return CurrentHealth.Value;
         }
 
-        public int TakeDamage(uint amount)
+        public void TakeDamage(uint amount)
         {
             CurrentHealth.Value -= (int)amount - Defense;
+            Debug.Log(name + " taking " + ((int)amount - Defense));
             DOTween.Sequence()
                    .Append(_sprite.DOColor(Color.red, 0))
                    .Append(_sprite.DOFade(0.5f, 0.1f))
                    .AppendInterval(0.1f)
                    .Append(_sprite.DOColor(Color.white, 0));
-            return CurrentHealth.Value;
         }
 
         private void Awake()
@@ -73,7 +74,7 @@ namespace Game.Scripts.Unit
         {
             CurrentHealth.Subscribe(x =>
                          {
-                             if (gameObject.CompareTag(SRTags.Player)) _audioSource.PlayOneShot(SRResources.SFX.S_Hit01);
+                             if (gameObject.CompareTag("Player")) _audioSource.PlayOneShot(Resources.Load<AudioClip>("SFX/S_Hit01"));
 
                              if (x > _maxHealth) CurrentHealth.Value = _maxHealth;
 

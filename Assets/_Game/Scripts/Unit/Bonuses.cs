@@ -43,7 +43,7 @@ namespace Game.Scripts.Unit
                                  _health.Defense = 30;
                                  AttackActive = false;
                                  DefenseActive = true;
-                                 CreateFx(SRResources.Prefabs.Dynamic.Shield);
+                                 CreateFx(ManagedPrefabs.Bank[PrefabID.Shield]);
                                  break;
                              case 1:
                                  _shooter.ShotsPerTurn = 3;
@@ -56,7 +56,7 @@ namespace Game.Scripts.Unit
                                  _health.Defense = -30;
                                  AttackActive = true;
                                  DefenseActive = false;
-                                 CreateFx(SRResources.Prefabs.Dynamic.BulletCharge02);
+                                 CreateFx(ManagedPrefabs.Bank[PrefabID.BulletCharge02]);
                                  break;
                              default:
                                  Debug.LogWarning("Illegal player position.");

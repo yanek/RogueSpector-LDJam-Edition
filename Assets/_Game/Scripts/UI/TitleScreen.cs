@@ -25,7 +25,7 @@ namespace Game.Scripts.UI
 
         private void Update()
         {
-            if (Input.GetButtonDown(SRInput.Submit))
+            if (Input.GetButtonDown("Submit"))
             {
                 GameManager.Instance.StartOver();
                 gameObject.Destroy();

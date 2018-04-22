@@ -18,15 +18,17 @@ public class GameOverScreen : MonoBehaviour
         TurnManager.Instance.Shots.Clear();
         TurnManager.Instance.EnemyMoves.Clear();
 
-        GameObject.FindGameObjectWithTag(SRTags.Grid).Destroy();
-        GameObject.FindGameObjectsWithTag(SRTags.Bullet).Destroy();
-        GameObject.FindGameObjectsWithTag(SRTags.Friend).Destroy();
-        GameObject.FindGameObjectsWithTag(SRTags.Enemy).Destroy();
+        GameObject[] obj = GameObject.FindGameObjectsWithTag("Grid");
+        Debug.Log(obj.Length);
+        obj.Destroy();
+        GameObject.FindGameObjectsWithTag("Bullet").Destroy();
+        GameObject.FindGameObjectsWithTag("Friend").Destroy();
+        GameObject.FindGameObjectsWithTag("Enemy").Destroy();
     }
 
     private void Update()
     {
-        if (Input.GetButtonDown(SRInput.Submit))
+        if (Input.GetButtonDown("Submit"))
         {
             GameManager.Instance.StartOver();
             gameObject.Destroy();

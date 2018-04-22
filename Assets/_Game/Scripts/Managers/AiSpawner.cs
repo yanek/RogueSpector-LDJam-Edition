@@ -43,8 +43,8 @@ namespace Game.Scripts.Managers
             TurnManager.Instance.TurnCount.Where(x => GameManager.Instance.CurrentState == GameManager.State.Standard)
                        .Subscribe(x =>
                        {
-                           _unitCount = GameObject.FindGameObjectsWithTag(SRTags.Enemy).Count(y => y.GetComponent<Shooter>() != null) +
-                                        GameObject.FindGameObjectsWithTag(SRTags.Friend).Length;
+                           _unitCount = GameObject.FindGameObjectsWithTag("Enemy").Count(y => y.GetComponent<Shooter>() != null) +
+                                        GameObject.FindGameObjectsWithTag("Friend").Length;
 
                            SpawnObstacle();
                            if (_unitCount < _maxUnits) SpawnShip();

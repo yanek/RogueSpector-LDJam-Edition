@@ -17,7 +17,7 @@ namespace Game.Scripts.UI
 
         private void Awake()
         {
-            _bonuses = GameObject.FindGameObjectWithTag(SRTags.Player).GetComponent<Bonuses>();
+            _bonuses = GameObject.FindGameObjectWithTag("Player").GetComponent<Bonuses>();
         }
 
         private void Start()

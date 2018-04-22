@@ -18,7 +18,7 @@ namespace Game.Scripts.Managers
 
         public void StartOver()
         {
-            GameObject player = SRResources.Prefabs.Units.Player.Instantiate();
+            GameObject player = Instantiate(ManagedPrefabs.Bank[PrefabID.Player]);
             CurrentState = State.Standard;
 
             ScoreManager.Instance.Score.Value = 0;
@@ -27,9 +27,9 @@ namespace Game.Scripts.Managers
             player.transform.position = new Vector2(4, 0);
 
             Transform canvas = FindObjectOfType<Canvas>().transform;
-            SRResources.Prefabs.UI.TurnPhaseIndicator.Instantiate(canvas);
-            SRResources.Prefabs.UI.BottomBar.Instantiate(canvas);
-            SRResources.Prefabs.Environement.GridSet.Instantiate();
+            Instantiate(ManagedPrefabs.Bank[PrefabID.UI_TurnPhaseIndicator], canvas);
+            Instantiate(ManagedPrefabs.Bank[PrefabID.UI_BottomBar], canvas);
+            Instantiate(ManagedPrefabs.Bank[PrefabID.GridSet]);
         }
 
         private void Awake()
