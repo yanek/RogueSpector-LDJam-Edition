@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Linq;
+using UnityEngine;
 
 namespace Game.Scripts.Managers
 {
@@ -18,6 +19,9 @@ namespace Game.Scripts.Managers
 
         public void StartOver()
         {
+            //have to destroy them here, because the game over screen doesn't do its job.
+            GameObject.FindGameObjectsWithTag("FX").Destroy();
+
             GameObject player = Instantiate(ManagedPrefabs.Bank[PrefabID.Player]);
             CurrentState = State.Standard;
 

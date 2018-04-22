@@ -5,14 +5,14 @@ SpriteAtlas:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Small
+  m_Name: Atlas
   m_EditorData:
     textureSettings:
       serializedVersion: 2
       anisoLevel: 1
       compressionQuality: 50
-      maxTextureSize: 1024
-      textureCompression: 0
+      maxTextureSize: 2048
+      textureCompression: 1
       filterMode: 0
       generateMipMaps: 0
       readable: 0
@@ -21,21 +21,24 @@ SpriteAtlas:
     platformSettings: []
     packingParameters:
       serializedVersion: 2
-      padding: 4
+      padding: 8
       blockOffset: 1
       allowAlphaSplitting: 0
       enableRotation: 1
       enableTightPacking: 1
     variantMultiplier: 1
     packables:
-    - {fileID: 102900000, guid: 18e5d5b650d4f69458b301248bbed96a, type: 3}
+    - {fileID: 102900000, guid: 854a67c747860e447868d36c46953f20, type: 3}
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: bb01319ed4a2de64d9f623300b7af1f2, type: 3}
   - {fileID: 21300000, guid: 923978003d6028d40a1968d73ee5a6d0, type: 3}
   - {fileID: 21300000, guid: 3c02d658796b2ce4b86c2ededb28dc30, type: 3}
+  - {fileID: 21300000, guid: 0f51fcfcfafbc4c489a8f8a815f3681d, type: 3}
   - {fileID: 21300000, guid: 7ef928b0042cea4468afe41d97d4f259, type: 3}
   - {fileID: 21300000, guid: b186808e4de6caa4a8e75e45629e064c, type: 3}
+  - {fileID: 21300000, guid: 742c5b44fdbe3d14fb4cd405bfd8daf5, type: 3}
   - {fileID: 21300000, guid: 3c37071a8a0c01542b868264b26a2bdd, type: 3}
   - {fileID: 21300000, guid: df81bbbf1da3fa246892ee574137f139, type: 3}
   - {fileID: 21300000, guid: f2503eb903ce14b438528abda06c4c1c, type: 3}
@@ -50,10 +53,13 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b8bbb2e15b637014cbb396d3b214cf37, type: 3}
   - {fileID: 21300000, guid: ab6ea5a5743ae484d9559b498dd0ab32, type: 3}
   m_PackedSpriteNamesToIndex:
+  - SP_Background
   - SP_Title
   - SP_BottomBarBackground
+  - SP_RepairKit
   - SP_EnemyShip
   - SP_Asteroid
+  - SP_Icon
   - SP_PlayerShip
   - SP_Shield
   - SP_DustParticle01
@@ -67,5 +73,5 @@ SpriteAtlas:
   - SP_Bullet02
   - SP_BulletCharge01
   - SP_BulletCharge02
-  m_Tag: Small
+  m_Tag: Atlas
   m_IsVariant: 0

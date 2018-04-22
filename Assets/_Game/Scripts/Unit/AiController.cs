@@ -20,12 +20,6 @@ namespace Game.Scripts.Unit
 
         private int _lastMoveTurn;
 
-        [SerializeField]
-        private int _maxCol = 8;
-
-        [SerializeField]
-        private int _minCol;
-
         private Mover _mover;
 
         [SerializeField]
@@ -36,13 +30,13 @@ namespace Game.Scripts.Unit
         private void Awake()
         {
             _mover = GetComponent<Mover>();
-            _charge = GetComponentInChildren<BulletCharge>(true);
             _player = GameObject.FindGameObjectWithTag("Player");
         }
 
         private void Move()
         {
             Vector2 movement = Vector2.down;
+            _charge = GetComponentInChildren<BulletCharge>(true);
 
             bool distanceCheck = _player == null || Vector2.Distance(_player.transform.position, transform.position) > 2;
             bool chargeCheck = _charge == null || !_charge.gameObject.activeSelf;
@@ -51,9 +45,10 @@ namespace Game.Scripts.Unit
             {
                 int roll = Random.Range(1, 100);
                 if (roll < 50)
-                    if (roll <= 25 || transform.position.x >= _maxCol)
+                    if (roll <= 25 && transform.position.x > Mover.MinColumn)
                         movement += Vector2.left;
-                    else if (roll > 25 || transform.position.x <= _minCol) movement += Vector2.right;
+                    else if (roll > 25 && transform.position.x < Mover.MaxColumn)
+                        movement += Vector2.right;
             }
 
             _lastMoveTurn = TurnManager.Instance.TurnCount.Value;

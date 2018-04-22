@@ -18,9 +18,7 @@ public class GameOverScreen : MonoBehaviour
         TurnManager.Instance.Shots.Clear();
         TurnManager.Instance.EnemyMoves.Clear();
 
-        GameObject[] obj = GameObject.FindGameObjectsWithTag("Grid");
-        Debug.Log(obj.Length);
-        obj.Destroy();
+        GameObject.FindGameObjectsWithTag("Grid").Destroy();
         GameObject.FindGameObjectsWithTag("Bullet").Destroy();
         GameObject.FindGameObjectsWithTag("Friend").Destroy();
         GameObject.FindGameObjectsWithTag("Enemy").Destroy();

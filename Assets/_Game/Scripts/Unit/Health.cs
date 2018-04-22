@@ -52,8 +52,11 @@ namespace Game.Scripts.Unit
 
         public void TakeDamage(uint amount)
         {
-            CurrentHealth.Value -= (int)amount - Defense;
-            Debug.Log(name + " taking " + ((int)amount - Defense));
+            int taken = (int)amount - Defense;
+            if (taken < 5) taken = 5;
+
+            CurrentHealth.Value -= taken;
+            Debug.Log(name + " taking " + taken + " dmg");
             DOTween.Sequence()
                    .Append(_sprite.DOColor(Color.red, 0))
                    .Append(_sprite.DOFade(0.5f, 0.1f))
