@@ -41,6 +41,8 @@ public sealed class SRTags {
     
     public const string Bullet = "Bullet";
     
+    public const string Grid = "Grid";
+    
     private static global::System.Collections.Generic.IList<string> __all = new global::System.Collections.ObjectModel.ReadOnlyCollection<string>(new string[] {
                 "Untagged",
                 "Respawn",
@@ -51,7 +53,8 @@ public sealed class SRTags {
                 "GameController",
                 "Enemy",
                 "Friend",
-                "Bullet"});
+                "Bullet",
+                "Grid"});
     
     public static global::System.Collections.Generic.IList<string> All {
         get {

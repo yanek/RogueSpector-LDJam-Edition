@@ -68,7 +68,9 @@ namespace Game.Scripts.Dynamic
                 _audioSource.PlayOneShot(SRResources.SFX.S_Hit02);
 
                 //increment score if shooted by player
-                if (Emitter.CompareTag(SRTags.Player)) ScoreManager.Instance.Score.Value += 10;
+                if (Emitter.CompareTag(SRTags.Player) && other.gameObject.CompareTag(SRTags.Enemy) && other.gameObject.GetComponent<Shooter>() != null
+                )
+                    ScoreManager.Instance.Score.Value += 10;
 
                 StartCoroutine(PlayImpact(transform.position));
 

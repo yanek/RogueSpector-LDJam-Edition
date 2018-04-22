@@ -28,7 +28,7 @@ ExportedObj/
 .idea/
 
 # TypeSafe generated files
-UnityProject/Assets/**/TypeSafe/usr*
+UnityProject/Assets/**/TypeSafe
 
 # Unity3D generated meta files
 *.pidb.meta

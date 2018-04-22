@@ -40,14 +40,15 @@ namespace Game.Scripts.Managers
 
         private void Start()
         {
-            TurnManager.Instance.TurnCount.Subscribe(x =>
-            {
-                _unitCount = GameObject.FindGameObjectsWithTag(SRTags.Enemy).Count(y => y.GetComponent<Shooter>() != null) +
-                             GameObject.FindGameObjectsWithTag(SRTags.Friend).Length;
+            TurnManager.Instance.TurnCount.Where(x => GameManager.Instance.CurrentState == GameManager.State.Standard)
+                       .Subscribe(x =>
+                       {
+                           _unitCount = GameObject.FindGameObjectsWithTag(SRTags.Enemy).Count(y => y.GetComponent<Shooter>() != null) +
+                                        GameObject.FindGameObjectsWithTag(SRTags.Friend).Length;
 
-                SpawnObstacle();
-                if (_unitCount < _maxUnits) SpawnShip();
-            });
+                           SpawnObstacle();
+                           if (_unitCount < _maxUnits) SpawnShip();
+                       });
         }
     }
 }

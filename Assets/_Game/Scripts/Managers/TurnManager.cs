@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using Game.Scripts.Dynamic;
 using Game.Scripts.Unit;
+using TypeSafe;
 using UniRx;
 using Unity.Linq;
 using UnityEngine;
@@ -54,9 +55,11 @@ namespace Game.Scripts.Managers
 
             foreach (GameObject shooter in Shots)
             {
-                StartCoroutine(shooter.CompareTag(SRTags.Player)
-                                   ? Bullet.SpawnBullets(3, SRResources.Prefabs.Dynamic.Bullet02, shooter)
-                                   : Bullet.SpawnBullets(5, SRResources.Prefabs.Dynamic.Bullet01, shooter));
+                PrefabResource prefab = shooter.CompareTag(SRTags.Player)
+                    ? SRResources.Prefabs.Dynamic.Bullet02
+                    : SRResources.Prefabs.Dynamic.Bullet01;
+
+                StartCoroutine(Bullet.SpawnBullets(shooter.GetComponent<Shooter>().ShotsPerTurn, prefab, shooter));
             }
 
             yield return new WaitForSeconds(Bullet.BulletFlyTime / 2);

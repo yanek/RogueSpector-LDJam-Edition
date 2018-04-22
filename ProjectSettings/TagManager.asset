@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Friend
   - Bullet
+  - Grid
   layers:
   - Default
   - TransparentFX
@@ -44,11 +45,11 @@ TagManager:
   - name: Background
     uniqueID: 4446773
     locked: 0
-  - name: Bullets
-    uniqueID: 824697895
-    locked: 0
   - name: Units
     uniqueID: 1393196931
+    locked: 0
+  - name: Bullets
+    uniqueID: 824697895
     locked: 0
   - name: Default
     uniqueID: 0

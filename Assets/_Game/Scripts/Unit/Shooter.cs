@@ -13,6 +13,15 @@ namespace Game.Scripts.Unit
 
         private int _lastShotTurn;
 
+        [SerializeField]
+        private int _shotsPerTurn;
+
+        public int ShotsPerTurn
+        {
+            get { return _shotsPerTurn; }
+            set { _shotsPerTurn = value; }
+        }
+
         private void Awake()
         {
             _bulletCharge = GetComponentInChildren<BulletCharge>(true);

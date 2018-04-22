@@ -32,14 +32,17 @@ SpriteAtlas:
     bindAsDefault: 1
   m_MasterAtlas: {fileID: 0}
   m_PackedSprites:
+  - {fileID: 21300000, guid: 923978003d6028d40a1968d73ee5a6d0, type: 3}
   - {fileID: 21300000, guid: 3c02d658796b2ce4b86c2ededb28dc30, type: 3}
   - {fileID: 21300000, guid: 7ef928b0042cea4468afe41d97d4f259, type: 3}
   - {fileID: 21300000, guid: b186808e4de6caa4a8e75e45629e064c, type: 3}
   - {fileID: 21300000, guid: 3c37071a8a0c01542b868264b26a2bdd, type: 3}
+  - {fileID: 21300000, guid: df81bbbf1da3fa246892ee574137f139, type: 3}
   - {fileID: 21300000, guid: f2503eb903ce14b438528abda06c4c1c, type: 3}
   - {fileID: 21300000, guid: 3618f1891f890e8478f71ff8009fef9c, type: 3}
   - {fileID: 21300000, guid: ac427ce92c925aa48b76990b52913ee5, type: 3}
   - {fileID: 21300000, guid: 322d9f407c8875446b04d5dd5e95f143, type: 3}
+  - {fileID: 21300000, guid: 6010f396073c3074aacf9178caf0a13c, type: 3}
   - {fileID: 21300000, guid: 346301c20947d574882035f8d7cbc551, type: 3}
   - {fileID: 21300000, guid: 8aabc0c2b611f9643bc599c842af2908, type: 3}
   - {fileID: 21300000, guid: 5ee85c58f5252284bbc2ee55051322fe, type: 3}
@@ -47,14 +50,17 @@ SpriteAtlas:
   - {fileID: 21300000, guid: b8bbb2e15b637014cbb396d3b214cf37, type: 3}
   - {fileID: 21300000, guid: ab6ea5a5743ae484d9559b498dd0ab32, type: 3}
   m_PackedSpriteNamesToIndex:
+  - SP_Title
   - SP_BottomBarBackground
   - SP_EnemyShip
   - SP_Asteroid
   - SP_PlayerShip
+  - SP_Shield
   - SP_DustParticle01
   - SP_FriendlyShip
   - SP_Grid
   - SP_CloudParticle01
+  - SP_Scanlines_0
   - SP_Explo01
   - SP_ImpactParticle
   - SP_Bullet01

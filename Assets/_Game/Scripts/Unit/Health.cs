@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using DG.Tweening;
-using Game.Scripts.Dynamic;
+﻿using DG.Tweening;
 using Game.Scripts.Managers;
 using UniRx;
 using Unity.Linq;
@@ -21,15 +18,12 @@ namespace Game.Scripts.Unit
 
         public IntReactiveProperty CurrentHealth { get; set; }
 
+        public int Defense { get; set; }
+
         public Subject<GameObject> OnDeath { get; set; }
 
         public void HandleDeath(GameObject obj)
         {
-            IEnumerable<Bullet> bullets = GameObject.FindGameObjectsWithTag(SRTags.Bullet)
-                                                    .Select(x => x.GetComponent<Bullet>())
-                                                    .Where(x => x.Emitter == obj);
-            foreach (Bullet bullet in bullets) TurnManager.Instance.Disposables.Add(bullet.gameObject);
-
             if (obj.CompareTag(SRTags.Player))
             {
                 SRResources.Prefabs.UI.GameOverScreen.Instantiate(FindObjectOfType<Canvas>().transform);
@@ -37,6 +31,11 @@ namespace Game.Scripts.Unit
                 GameObject explo = SRResources.Prefabs.Dynamic.Explo01.Instantiate(transform.position);
                 explo.transform.DOPunchScale(Vector3.one * 40, 3f, 2, 5f).OnComplete(() => explo.Destroy());
                 obj.Destroy();
+            }
+            else if (obj.CompareTag(SRTags.Friend))
+            {
+                GameObject.FindGameObjectWithTag(SRTags.Player).GetComponent<Health>().TakeDamage(100);
+                TurnManager.Instance.Disposables.Add(obj);
             }
             else
             {
@@ -52,7 +51,7 @@ namespace Game.Scripts.Unit
 
         public int TakeDamage(uint amount)
         {
-            CurrentHealth.Value -= (int)amount;
+            CurrentHealth.Value -= (int)amount - Defense;
             DOTween.Sequence()
                    .Append(_sprite.DOColor(Color.red, 0))
                    .Append(_sprite.DOFade(0.5f, 0.1f))
@@ -67,6 +66,7 @@ namespace Game.Scripts.Unit
             OnDeath = new Subject<GameObject>();
             _audioSource = Camera.main.GetComponent<AudioSource>();
             _sprite = GetComponent<SpriteRenderer>();
+            Defense = 0;
         }
 
         private void Start()

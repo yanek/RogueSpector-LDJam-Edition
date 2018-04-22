@@ -150,33 +150,40 @@ public sealed class SRResources {
                 }
             }
             
-            public static global::TypeSafe.PrefabResource Explo01 {
+            public static global::TypeSafe.PrefabResource Shield {
                 get {
                     return ((global::TypeSafe.PrefabResource)(__ts_internal_resources[2]));
                 }
             }
             
-            public static global::TypeSafe.PrefabResource BulletCharge02 {
+            public static global::TypeSafe.PrefabResource Explo01 {
                 get {
                     return ((global::TypeSafe.PrefabResource)(__ts_internal_resources[3]));
                 }
             }
             
-            public static global::TypeSafe.PrefabResource Bullet01 {
+            public static global::TypeSafe.PrefabResource BulletCharge02 {
                 get {
                     return ((global::TypeSafe.PrefabResource)(__ts_internal_resources[4]));
                 }
             }
             
-            public static global::TypeSafe.PrefabResource Bullet02 {
+            public static global::TypeSafe.PrefabResource Bullet01 {
                 get {
                     return ((global::TypeSafe.PrefabResource)(__ts_internal_resources[5]));
+                }
+            }
+            
+            public static global::TypeSafe.PrefabResource Bullet02 {
+                get {
+                    return ((global::TypeSafe.PrefabResource)(__ts_internal_resources[6]));
                 }
             }
             
             private static global::System.Collections.Generic.IList<global::TypeSafe.IResource> __ts_internal_resources = new global::System.Collections.ObjectModel.ReadOnlyCollection<global::TypeSafe.IResource>(new global::TypeSafe.IResource[] {
                         new global::TypeSafe.PrefabResource("BulletCharge01", "Prefabs/Dynamic/BulletCharge01"),
                         new global::TypeSafe.PrefabResource("Impact", "Prefabs/Dynamic/Impact"),
+                        new global::TypeSafe.PrefabResource("Shield", "Prefabs/Dynamic/Shield"),
                         new global::TypeSafe.PrefabResource("Explo01", "Prefabs/Dynamic/Explo01"),
                         new global::TypeSafe.PrefabResource("BulletCharge02", "Prefabs/Dynamic/BulletCharge02"),
                         new global::TypeSafe.PrefabResource("Bullet01", "Prefabs/Dynamic/Bullet01"),
@@ -356,21 +363,28 @@ public sealed class SRResources {
                 }
             }
             
-            public static global::TypeSafe.PrefabResource BottomBar {
+            public static global::TypeSafe.PrefabResource StartScreen {
                 get {
                     return ((global::TypeSafe.PrefabResource)(__ts_internal_resources[2]));
                 }
             }
             
-            public static global::TypeSafe.PrefabResource TurnPhaseIndicator {
+            public static global::TypeSafe.PrefabResource BottomBar {
                 get {
                     return ((global::TypeSafe.PrefabResource)(__ts_internal_resources[3]));
+                }
+            }
+            
+            public static global::TypeSafe.PrefabResource TurnPhaseIndicator {
+                get {
+                    return ((global::TypeSafe.PrefabResource)(__ts_internal_resources[4]));
                 }
             }
             
             private static global::System.Collections.Generic.IList<global::TypeSafe.IResource> __ts_internal_resources = new global::System.Collections.ObjectModel.ReadOnlyCollection<global::TypeSafe.IResource>(new global::TypeSafe.IResource[] {
                         new global::TypeSafe.PrefabResource("GameOverScreen", "Prefabs/UI/GameOverScreen"),
                         new global::TypeSafe.PrefabResource("Canvas", "Prefabs/UI/Canvas"),
+                        new global::TypeSafe.PrefabResource("StartScreen", "Prefabs/UI/StartScreen"),
                         new global::TypeSafe.PrefabResource("BottomBar", "Prefabs/UI/BottomBar"),
                         new global::TypeSafe.PrefabResource("TurnPhaseIndicator", "Prefabs/UI/TurnPhaseIndicator")});
             
@@ -446,8 +460,15 @@ public sealed class SRResources {
                 }
             }
             
+            public static global::TypeSafe.PrefabResource GridSet {
+                get {
+                    return ((global::TypeSafe.PrefabResource)(__ts_internal_resources[1]));
+                }
+            }
+            
             private static global::System.Collections.Generic.IList<global::TypeSafe.IResource> __ts_internal_resources = new global::System.Collections.ObjectModel.ReadOnlyCollection<global::TypeSafe.IResource>(new global::TypeSafe.IResource[] {
-                        new global::TypeSafe.PrefabResource("Grid", "Prefabs/Environement/Grid")});
+                        new global::TypeSafe.PrefabResource("Grid", "Prefabs/Environement/Grid"),
+                        new global::TypeSafe.PrefabResource("GridSet", "Prefabs/Environement/GridSet")});
             
             /// <summary>
             /// Return a list of all resources in this folder.

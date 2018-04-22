@@ -10,6 +10,7 @@ namespace Game.Scripts.Managers
         public enum State
         {
             Standard,
+            Title,
             GameOver
         }
 
@@ -28,6 +29,7 @@ namespace Game.Scripts.Managers
             Transform canvas = FindObjectOfType<Canvas>().transform;
             SRResources.Prefabs.UI.TurnPhaseIndicator.Instantiate(canvas);
             SRResources.Prefabs.UI.BottomBar.Instantiate(canvas);
+            SRResources.Prefabs.Environement.GridSet.Instantiate();
         }
 
         private void Awake()
